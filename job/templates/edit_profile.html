@@ -1,0 +1,252 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card border rounded-3 overflow-hidden">
+        <div class="card-header bg-primary py-4">
+          <h4 class="card-title text-white text-center mb-0">
+            <i class="fa fa-user-edit me-2"></i>Edit Your Profile
+          </h4>
+        </div>
+        <div class="card-body p-4 p-md-5">
+          <form
+            action="{% url 'edited_profile' %}"
+            method="post"
+            enctype="multipart/form-data"
+            class="needs-validation"
+            novalidate
+          >
+            {% csrf_token %} {% if user.user_type == '2' %}
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">First Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ user.first_name }}"
+                    name="f_name"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your first name.</div>
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Last Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ user.last_name }}"
+                    name="l_name"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your last name.</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                <input
+                  type="email"
+                  class="form-control"
+                  value="{{ user.email }}"
+                  name="email"
+                  readonly
+                />
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ applicant.phone_number }}"
+                  name="p_number"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please enter your phone number.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Gender <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+                <select class="form-select" name="gender" required>
+                  <option value="Male" {% if applicant.gender == 'Male' %}selected{% endif %}>Male</option>
+                  <option value="Female" {% if applicant.gender == 'Female' %}selected{% endif %}>Female</option>
+                  <option value="Other" {% if applicant.gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+              </div>
+              <div class="invalid-feedback">Please select your gender.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Address</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                <textarea class="form-control" name="address" rows="3">{{ applicant.address }}</textarea>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Current CV</label>
+              <input
+                type="text"
+                class="form-control mb-2"
+                value="{{ applicant.cv }}"
+                readonly
+              />
+              <label class="form-label fw-bold">Upload New CV</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-file-pdf-o"></i></span>
+                <input type="file" class="form-control" name="cv" />
+              </div>
+              <div class="form-text">Upload a new CV only if you want to replace the current one.</div>
+            </div>
+
+            {% else %}
+
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">First Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ user.first_name }}"
+                    name="f_name"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your first name.</div>
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Last Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ user.last_name }}"
+                    name="l_name"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your last name.</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                <input
+                  type="email"
+                  class="form-control"
+                  value="{{ user.email }}"
+                  name="email"
+                  readonly
+                />
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold">State <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-map"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="{{ applicant.state }}"
+                    name="state"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your state.</div>
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Country <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="country"
+                    value="{{ applicant.country }}"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your country.</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Company Name <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-building"></i></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  value="{{ applicant.company }}"
+                  name="company"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please enter your company name.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Company Logo</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-image"></i></span>
+                <input type="file" class="form-control" name="logo" />
+              </div>
+              <div class="form-text">Upload a new logo only if you want to replace the current one.</div>
+            </div>
+
+            {% endif %}
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fa fa-save me-2"></i>Save Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Form validation
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  });
+</script>
+{% endblock %}

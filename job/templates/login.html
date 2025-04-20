@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card border rounded-3 overflow-hidden">
+        <div class="card-header bg-primary py-4">
+          <h4 class="card-title text-white text-center mb-0">
+            <i class="fa fa-user me-2"></i>Login with Password
+          </h4>
+        </div>
+        <div class="card-body p-4 p-md-5">
+          {% include "message.html" %}
+          <form action="{% url 'do_login' %}" method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Email Address <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                <input 
+                  type="password" 
+                  id="password1" 
+                  name="password" 
+                  placeholder="Enter your password" 
+                  class="form-control" 
+                  required 
+                />
+                <button 
+                  id="show-password1" 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                >
+                  <i class="fa fa-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback">Please enter your password.</div>
+            </div>
+            
+            <div class="mb-4 text-end">
+              <a href="{% url 'forgot_password' %}" class="text-decoration-none">Forgot Password?</a>
+            </div>
+            
+            <div class="d-grid gap-2 mb-4">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fa fa-sign-in-alt me-2"></i>Login
+              </button>
+            </div>
+            
+            <div class="text-center">
+              <p class="mb-0">Don't have an account? <a href="{% url 'register' %}" class="fw-bold text-decoration-none">Register</a></p>
+              <p class="mt-2 mb-0">Prefer OTP login? <a href="{% url 'email_login' %}" class="fw-bold text-decoration-none">Login with OTP</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Password show/hide functionality
+    let password1 = document.getElementById('password1');
+    let showPassword1 = document.getElementById('show-password1');
+    
+    showPassword1.onclick = function (e) {
+      e.preventDefault();
+      if (password1.type === 'password') {
+        password1.type = 'text';
+        showPassword1.innerHTML = '<i class="fa fa-eye-slash"></i>';
+      } else {
+        password1.type = 'password';
+        showPassword1.innerHTML = '<i class="fa fa-eye"></i>';
+      }
+    }
+    
+    // Form validation
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  });
+</script>
+{% endblock %}

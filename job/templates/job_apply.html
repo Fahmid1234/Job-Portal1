@@ -1,0 +1,316 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card border rounded-3 overflow-hidden">
+        <div class="card-header bg-primary py-4">
+          <h4 class="card-title text-white text-center mb-0">
+            <i class="fa fa-briefcase me-2"></i>Post a New Job
+          </h4>
+        </div>
+        <div class="card-body p-4 p-md-5">
+          <form action="{% url 'add_job' %}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="row mb-4">
+              <div class="col-12">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                  <i class="fa fa-building me-2"></i>Company Information
+                </h5>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Company Name</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-building"></i></span>
+                  <input
+                    type="text"
+                    name="company"
+                    class="form-control"
+                    value="{{ company }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Email Address</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    value="{{ email }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label fw-bold">Website (Optional)</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                  <input
+                    type="url"
+                    name="website"
+                    placeholder="https://example.com"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-12">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                  <i class="fa fa-clipboard-list me-2"></i>Job Details
+                </h5>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Position Title <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-user-tie"></i></span>
+                  <input
+                    type="text"
+                    name="position"
+                    placeholder="e.g. Senior Software Engineer"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please provide a position title.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Number of Vacancies <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-users"></i></span>
+                  <input
+                    type="number"
+                    name="vacancy"
+                    placeholder="Number of openings"
+                    class="form-control"
+                    min="1"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please specify the number of vacancies.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Job Type <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                  <select name="job_type" class="form-select" required>
+                    <option value="" disabled selected>Select job type</option>
+                    {% for type in job_types %}
+                    <option value="{{ type.job_type }}">{{ type.job_type }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="invalid-feedback">Please select a job type.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Job Category <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-folder"></i></span>
+                  <select name="category" class="form-select" required>
+                    <option value="" disabled selected>Select job category</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.category }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="invalid-feedback">Please select a job category.</div>
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-12">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                  <i class="fa fa-dollar-sign me-2"></i>Compensation
+                </h5>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Minimum Salary <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-dollar-sign"></i></span>
+                  <input
+                    type="number"
+                    name="min_salary"
+                    placeholder="Minimum Salary"
+                    class="form-control"
+                    min="0"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please specify the minimum salary.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Maximum Salary <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-dollar-sign"></i></span>
+                  <input
+                    type="number"
+                    name="max_salary"
+                    placeholder="Maximum Salary"
+                    class="form-control"
+                    min="0"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please specify the maximum salary.</div>
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-12">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                  <i class="fa fa-calendar-alt me-2"></i>Application Deadline
+                </h5>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Deadline Date <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                  <input 
+                    type="date" 
+                    name="apply_date" 
+                    class="form-control" 
+                    required 
+                  />
+                </div>
+                <div class="invalid-feedback">Please set a deadline date.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Deadline Time <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                  <input 
+                    type="time" 
+                    name="apply_time" 
+                    class="form-control" 
+                    required 
+                  />
+                </div>
+                <div class="invalid-feedback">Please set a deadline time.</div>
+              </div>
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-12">
+                <h5 class="text-primary border-bottom pb-2 mb-3">
+                  <i class="fa fa-info-circle me-2"></i>Job Description and Requirements
+                </h5>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label fw-bold">Job Description <span class="text-danger">*</span></label>
+                <textarea
+                  name="description"
+                  id="editor1"
+                  class="form-control"
+                  placeholder="Enter a detailed description of the job..."
+                  required
+                ></textarea>
+                <div class="form-text">Provide a comprehensive description of the role, the team, and the company culture.</div>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label fw-bold">Responsibilities <span class="text-danger">*</span></label>
+                <textarea
+                  name="responsibility"
+                  id="editor2"
+                  class="form-control"
+                  placeholder="List the job responsibilities..."
+                  required
+                ></textarea>
+                <div class="form-text">Outline the key responsibilities and duties for this position.</div>
+              </div>
+              <div class="col-12 mb-3">
+                <label class="form-label fw-bold">Qualifications <span class="text-danger">*</span></label>
+                <textarea
+                  name="qualifications"
+                  id="editor3"
+                  class="form-control"
+                  placeholder="List required qualifications and skills..."
+                  required
+                ></textarea>
+                <div class="form-text">Specify the required skills, experience, education, and certifications.</div>
+              </div>
+            </div>
+            
+            <div class="row mt-4">
+              <div class="col-12 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" onclick="window.history.back()">
+                  <i class="fa fa-arrow-left me-2"></i>Cancel
+                </button>
+                <button type="submit" class="btn btn-primary btn-lg px-4">
+                  <i class="fa fa-paper-plane me-2"></i>Post Job
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Load CKEditor from CDN -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+
+<script>
+  // Initialize CKEditor for each textarea
+  document.addEventListener("DOMContentLoaded", function () {
+    // Configuration for all editors
+    const editorConfig = {
+      toolbar: [
+        "heading",
+        "|",
+        "bold",
+        "italic",
+        "link",
+        "bulletedList",
+        "numberedList",
+        "|",
+        "undo",
+        "redo",
+      ],
+    };
+
+    // Initialize all editors
+    try {
+      ClassicEditor.create(
+        document.querySelector("#editor1"),
+        editorConfig
+      ).catch((error) => {
+        console.error("Error initializing editor1:", error);
+      });
+
+      ClassicEditor.create(
+        document.querySelector("#editor2"),
+        editorConfig
+      ).catch((error) => {
+        console.error("Error initializing editor2:", error);
+      });
+
+      ClassicEditor.create(
+        document.querySelector("#editor3"),
+        editorConfig
+      ).catch((error) => {
+        console.error("Error initializing editor3:", error);
+      });
+    } catch (error) {
+      console.error("CKEditor initialization error:", error);
+    }
+    
+    // Form validation
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  });
+</script>
+{% endblock %}

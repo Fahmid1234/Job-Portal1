@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block content %}
+        <div class="container-xxl py-5 bg-dark page-header mb-5">
+            <div class="container my-5 pt-5 pb-4">
+                <h1 class="display-3 text-white mb-3 animated slideInDown">Job Detail</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb text-uppercase">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Job Detail</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- Header End -->
+
+
+        <!-- Job Detail Start -->
+        <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="row gy-5 gx-4">
+                    <div class="col-lg-8">
+                        {% for job in job %}
+                        <div class="d-flex align-items-center mb-5">
+                            <img class="flex-shrink-0 img-fluid border rounded" src="{{job.company_name.logo.url}}" alt="" style="width: 80px; height: 80px;">
+                            <div class="text-start ps-4">
+                                <h3 class="mb-3">{{job.position}}</h3>
+                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>{{job.company_name.state}}, {{job.company_name.country}}</span>
+                                <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>{{job.job_type}}</span>
+                                <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>৳{{job.min_salary}} - ৳{{job.max_salary}}</span>
+                            </div>
+                        </div>
+                        {% comment %} {% endfor %}
+                        {% for job in job %} {% endcomment %}
+                        <div class="mb-5">
+                            <h4 class="mb-3">Job description</h4>
+                            <p>{{job.description|safe}}</p>
+                            <h4 class="mb-3">Responsibility</h4>
+                            <p>{{job.responsibility|safe}}</p>
+                            {% comment %} <ul class="list-unstyled">
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
+                            </ul> {% endcomment %}
+                            <h4 class="mb-3">Qualifications</h4>
+                            <p>{{job.qualification|safe}}</p>
+                            {% comment %} <ul class="list-unstyled">
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
+                                <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
+                            </ul> {% endcomment %}
+                        </div>
+                        {% comment %} {% endfor %} {% endcomment %}
+                    </div>
+                    {% comment %} {% for job in job %} {% endcomment %}
+                    <div class="col-lg-4">
+                        <div class="bg-light rounded p-5 mb-4 wow slideInUp" data-wow-delay="0.1s">
+                            <h4 class="mb-4">Job Summery</h4>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: {{job.post_date}}</p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: {{job.vacancy}}</p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: {{job.job_type}}</p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: ৳{{job.min_salary}} - ৳{{job.max_salary}}</p>
+                            <p><i class="fa fa-angle-right text-primary me-2"></i>Location: {{job.company_name.state}}, {{job.company_name.country}}</p>
+                            <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: <span style="text-transform: uppercase;">{{job.apply_time}}, </span>{{job.apply_date}}</p>
+                        </div>
+                        <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
+                            <h4 class="mb-4">Company Detail</h4>
+                            <p class="m-0">Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Application Form -->
+                {% if request.user.is_authenticated %}
+                {% if request.user.user_type == "2" %}
+                {% for job in job %}
+                {% if forloop.last %}
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-8">
+                        <div class="card border rounded-3 overflow-hidden mb-5">
+                            <div class="card-header bg-primary py-4">
+                                <h4 class="card-title text-white text-center mb-0">
+                                    <i class="fa fa-paper-plane me-2"></i>Apply For This Job
+                                </h4>
+                            </div>
+                            <div class="card-body p-4 p-md-5">
+                                <form action="{% url 'job_application' job.slug %}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                    {% csrf_token %}
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">Portfolio Website</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                                            <input 
+                                                type="text" 
+                                                name="portfolio" 
+                                                class="form-control" 
+                                                placeholder="https://yourportfolio.com"
+                                            />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">Upload CV/Resume <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-file-pdf-o"></i></span>
+                                            <input 
+                                                type="file" 
+                                                name="cv" 
+                                                class="form-control"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="invalid-feedback">Please upload your CV/Resume</div>
+                                        <div class="form-text">PDF, DOC or DOCX format recommended</div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label class="form-label fw-bold">Cover Letter <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fa fa-file-text-o"></i></span>
+                                            <textarea 
+                                                name="cover_letter" 
+                                                class="form-control" 
+                                                rows="6" 
+                                                placeholder="Explain why you're a good fit for this position..."
+                                                required
+                                            ></textarea>
+                                        </div>
+                                        <div class="invalid-feedback">Please provide a cover letter</div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-primary btn-lg" type="submit">
+                                            <i class="fa fa-paper-plane me-2"></i>Submit Application
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        <!-- Job Detail End -->
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Form validation
+                const forms = document.querySelectorAll('.needs-validation');
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            });
+        </script>
+        {% endblock  %}

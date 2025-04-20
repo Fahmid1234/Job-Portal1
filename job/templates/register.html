@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card border rounded-3 overflow-hidden">
+        <div class="card-header bg-primary py-4">
+          <h4 class="card-title text-white text-center mb-0">
+            <i class="fa fa-user-plus me-2"></i>Create Your Account
+          </h4>
+        </div>
+        <div class="card-body p-4 p-md-5">
+          <form action="{% url 'check_registration' %}" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">I am a <span class="text-danger">*</span></label>
+              <div class="d-flex gap-4">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="userType" 
+                    id="applicant" 
+                    value="applicant" 
+                    checked 
+                    required
+                  >
+                  <label class="form-check-label" for="applicant">
+                    <i class="fa fa-user me-1"></i> Applicant
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="userType" 
+                    id="recruiter" 
+                    value="recruiter" 
+                    required
+                  >
+                  <label class="form-check-label" for="recruiter">
+                    <i class="fa fa-building me-1"></i> Recruiter
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">First Name <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="Enter your first name"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please enter your first name.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Last Name <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                <input
+                  type="text"
+                  name="last_name"
+                  placeholder="Enter your last name"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please enter your last name.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Username <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-user-circle"></i></span>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Choose a username"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please choose a username.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Email Address <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email address"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            
+            <!-- Applicant-specific fields -->
+            <div id="applicant-fields">
+              <div class="mb-4">
+                <label class="form-label fw-bold">Profile Picture</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-image"></i></span>
+                  <input
+                    type="file"
+                    name="profile_pic"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                  <input
+                    type="tel"
+                    name="phone_number"
+                    placeholder="Enter your phone number"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your phone number.</div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">Address</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+                  <textarea
+                    name="address"
+                    placeholder="Enter your address"
+                    class="form-control"
+                  ></textarea>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">Gender <span class="text-danger">*</span></label>
+                <select class="form-select" name="gender" required>
+                  <option value="Male" selected>Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <div class="invalid-feedback">Please select your gender.</div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">Resume/CV</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-file-pdf-o"></i></span>
+                  <input
+                    type="file"
+                    name="resume"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <!-- Recruiter-specific fields -->
+            <div id="recruiter-fields" style="display: none;">
+              <div class="mb-4">
+                <label class="form-label fw-bold">Country <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-globe"></i></span>
+                  <input
+                    type="text"
+                    name="country"
+                    placeholder="Enter your country"
+                    class="form-control"
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your country.</div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">State <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-map"></i></span>
+                  <input
+                    type="text"
+                    name="state"
+                    placeholder="Enter your state"
+                    class="form-control"
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your state.</div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">Company Name <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-building"></i></span>
+                  <input
+                    type="text"
+                    name="company"
+                    placeholder="Enter your company name"
+                    class="form-control"
+                  />
+                </div>
+                <div class="invalid-feedback">Please enter your company name.</div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label fw-bold">Company Logo</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa fa-image"></i></span>
+                  <input
+                    type="file"
+                    name="company_logo"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                <input 
+                  type="password" 
+                  id="password1" 
+                  name="password" 
+                  placeholder="Enter your password" 
+                  class="form-control" 
+                  required 
+                />
+                <button 
+                  id="show-password1" 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                >
+                  <i class="fa fa-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback">Please enter your password.</div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="form-label fw-bold">Confirm Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                <input 
+                  type="password" 
+                  id="password2" 
+                  name="conf_password" 
+                  placeholder="Confirm your password" 
+                  class="form-control" 
+                  required 
+                />
+                <button 
+                  id="show-password2" 
+                  class="btn btn-outline-secondary" 
+                  type="button"
+                >
+                  <i class="fa fa-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback">Please confirm your password.</div>
+            </div>
+            
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fa fa-user-plus me-2"></i>Register
+              </button>
+            </div>
+            
+            <div class="text-center mt-4">
+              <p class="mb-0">Already have an account? <a href="{% url 'login' %}" class="fw-bold text-decoration-none">Login</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Password show/hide functionality
+    let password1 = document.getElementById('password1');
+    let password2 = document.getElementById('password2');
+    let showPassword1 = document.getElementById('show-password1');
+    let showPassword2 = document.getElementById('show-password2');
+    
+    showPassword1.onclick = function (e) {
+      e.preventDefault();
+      if (password1.type === 'password') {
+        password1.type = 'text';
+        showPassword1.innerHTML = '<i class="fa fa-eye-slash"></i>';
+      } else {
+        password1.type = 'password';
+        showPassword1.innerHTML = '<i class="fa fa-eye"></i>';
+      }
+    }
+    
+    showPassword2.onclick = function (e) {
+      e.preventDefault();
+      if (password2.type === 'password') {
+        password2.type = 'text';
+        showPassword2.innerHTML = '<i class="fa fa-eye-slash"></i>';
+      } else {
+        password2.type = 'password';
+        showPassword2.innerHTML = '<i class="fa fa-eye"></i>';
+      }
+    }
+    
+    // Show/hide fields based on user type
+    const applicantRadio = document.getElementById('applicant');
+    const recruiterRadio = document.getElementById('recruiter');
+    const applicantFields = document.getElementById('applicant-fields');
+    const recruiterFields = document.getElementById('recruiter-fields');
+    
+    function toggleFields() {
+      if (applicantRadio.checked) {
+        applicantFields.style.display = 'block';
+        recruiterFields.style.display = 'none';
+        
+        // Make applicant fields required
+        document.querySelectorAll('#applicant-fields input[type="tel"], #applicant-fields select').forEach(input => {
+          input.setAttribute('required', true);
+        });
+        
+        // Make recruiter fields not required
+        document.querySelectorAll('#recruiter-fields input[type="text"]').forEach(input => {
+          input.removeAttribute('required');
+        });
+      } else {
+        applicantFields.style.display = 'none';
+        recruiterFields.style.display = 'block';
+        
+        // Make recruiter fields required
+        document.querySelectorAll('#recruiter-fields input[type="text"]').forEach(input => {
+          input.setAttribute('required', true);
+        });
+        
+        // Make applicant fields not required
+        document.querySelectorAll('#applicant-fields input[type="tel"], #applicant-fields select').forEach(input => {
+          input.removeAttribute('required');
+        });
+      }
+    }
+    
+    // Set initial state
+    toggleFields();
+    
+    // Add event listeners
+    applicantRadio.addEventListener('change', toggleFields);
+    recruiterRadio.addEventListener('change', toggleFields);
+    
+    // Form validation
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  });
+</script>
+{% endblock %}

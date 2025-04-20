@@ -1,0 +1,82 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <!-- Logo -->
+    <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+        <h1 class="m-0 text-primary">JobEntry</h1>
+    </a>
+
+    <!-- Navbar Toggler (Mobile) -->
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Links -->
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <a href="{% url 'index' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a>
+            <a href="{% url 'about' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+            <a href="{% url 'our_services' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'our_services' %}active{% endif %}">Our Services</a>
+            
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle {% if request.resolver_match.url_name in 'privacy_policy terms_conditions' %}active{% endif %}" data-bs-toggle="dropdown">Legal</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                    <a href="{% url 'privacy_policy' %}" class="dropdown-item {% if request.resolver_match.url_name == 'privacy_policy' %}active{% endif %}">Privacy Policy</a>
+                    <a href="{% url 'terms_conditions' %}" class="dropdown-item {% if request.resolver_match.url_name == 'terms_conditions' %}active{% endif %}">Terms & Conditions</a>
+                </div>
+            </div>
+            <a href="{% url 'contact' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+
+            {% if request.user.is_authenticated %}
+                {% if request.user.user_type == '1' %}
+                    <a href="{% url 'job_apply' %}" class="btn btn-primary py-4 px-lg-5 mt-2 mb-2 me-3 d-lg-block shadow-sm" style="height: auto;">
+                        Post A Job <i class="fa fa-plus-circle ms-2"></i>
+                    </a>
+                {% endif %}
+                <div class="action position-relative">
+                    <div class="profile d-flex align-items-center" onclick="menuToggle();" style="border: 1px solid black; margin-right: 10px; margin-top: 15px;">
+                        {% if request.user.user_type == '1' %}
+                            {% with recruiter=request.user.recuiter %}
+                                {% if recruiter.logo %}
+                                    <img src="{{ recruiter.logo.url }}" alt="Company Logo" class="rounded-circle border profile-img">
+                                {% else %}
+                                    <img src="{% static 'assets/img/default-company-logo.png' %}" alt="Company Logo" class="rounded-circle border profile-img">
+                                {% endif %}
+                            {% endwith %}
+                        {% else %}
+                            {% if request.user.profile_pic %}
+                                <img src="{{ request.user.profile_pic.url }}" alt="Applicant Image" class="rounded-circle border profile-img">
+                            {% else %}
+                                <img src="{% static 'assets/img/default-profile.png' %}" alt="Applicant Image" class="rounded-circle border profile-img">
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="menu border rounded-3">
+                        <h3 class="text-center">
+                            {{ request.user.first_name }} {{ request.user.last_name }}<br />
+                            <span class="text-muted">
+                                {% if request.user.user_type == '1' %} Recruiter {% else %} Applicant {% endif %}
+                            </span>
+                        </h3>
+                        <ul class="list-unstyled">
+                            <li><a href="{% url 'my_profile' %}"><i class="fa fa-user me-2"></i> My Profile</a></li>
+                            <li><a href="{% url 'cng_pass' %}"><i class="fa fa-lock me-2"></i> Change Password</a></li>
+                            {% if request.user.user_type == '1' %}
+                                <li><a href="{% url 'application_notification' %}"><i class="fa fa-bell me-2"></i> Application Notifications</a></li>
+                            {% else %}
+                                <li><a href="{% url 'application_history' %}"><i class="fa fa-history me-2"></i> Application History</a></li>
+                                <li><a href="{% url 'view_notifications' %}"><i class="fa fa-bell me-2"></i> Notifications 
+                                    {% if unread_notification_count > 0 %}
+                                    <span class="badge bg-danger text-white">{{ unread_notification_count }}</span>
+                                    {% endif %}
+                                </a></li>
+                            {% endif %}
+                            <li><a href="{% url 'dologout' %}"><i class="fa fa-sign-out-alt me-2"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}">Login/Signup</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h1 class="text-center mb-5">Our Services</h1>
+            <p class="text-center mb-5">JobEntry offers comprehensive job matching and recruitment services that connect talented professionals with the right employment opportunities.</p>
+            
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="text-primary me-3">
+                                    <i class="fa fa-building fa-2x"></i>
+                                </div>
+                                <h4 class="mb-0">For Recruiters</h4>
+                            </div>
+                            <p>We provide a streamlined platform for employers and recruiters to find the perfect candidates for their job openings.</p>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Post job listings with detailed descriptions</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Access to a large pool of qualified candidates</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Review applications and resumes</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Track application status and manage hiring processes</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Company profile visibility to attract potential employees</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Accept or reject applications with automatic notifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="text-primary me-3">
+                                    <i class="fa fa-user-tie fa-2x"></i>
+                                </div>
+                                <h4 class="mb-0">For Job Seekers</h4>
+                            </div>
+                            <p>We assist job seekers in finding the right positions that match their skills, experience, and career aspirations.</p>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Create a professional profile to showcase your skills</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Upload and manage your resume</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Apply to relevant job openings with ease</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Track your application status</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Receive notifications about application decisions</li>
+                                <li class="mb-2"><i class="fa fa-check-circle text-primary me-2"></i> Browse jobs by category, type, and location</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h2 class="text-center mb-4">Additional Features</h2>
+            
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="fa fa-search fa-3x text-primary"></i>
+                            </div>
+                            <h4>Advanced Search</h4>
+                            <p>Our platform offers powerful search capabilities, allowing users to filter jobs by category, type, location, and more.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="fa fa-user-shield fa-3x text-primary"></i>
+                            </div>
+                            <h4>Secure Profiles</h4>
+                            <p>Your information is secured with state-of-the-art encryption and privacy measures to protect your personal and professional data.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 text-center">
+                            <div class="mb-3">
+                                <i class="fa fa-bell fa-3x text-primary"></i>
+                            </div>
+                            <h4>Notifications</h4>
+                            <p>Stay updated with real-time notifications about job applications, status changes, and important updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <h3>Ready to Get Started?</h3>
+                <p class="mb-4">Join thousands of recruiters and job seekers who have found success on our platform.</p>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Sign Up Now</a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-primary btn-lg">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

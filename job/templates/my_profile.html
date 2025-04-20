@@ -1,0 +1,259 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<style>
+  form {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+</style>
+<div
+  class="row pt-3 mt-5 mb-5"
+  style="
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #008000;
+    padding: 15px;
+    border-radius: 10px;
+  "
+>
+  <h4
+    class="mb-3"
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin: 0 auto;
+      background: var(--primary);
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      color: white;
+    "
+  >
+    My Profile
+  </h4>
+  {% if user.user_type == '2' %}
+  
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <label class="form-label fw-bold">First Name <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          value="{{ user.first_name }}"
+          name="f_name"
+          readonly
+        />
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <label class="form-label fw-bold">Last Name <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          value="{{ user.last_name }}"
+          name="l_name"
+          readonly
+        />
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label">Username</label>
+    <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          value="{{ user.username }}"
+          name="username"
+          readonly
+        />
+      </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="form-label fw-bold">Email</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+      <input
+        type="email"
+        class="form-control"
+        value="{{ user.email }}"
+        name="email"
+        readonly
+      />
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label fw-bold">Phone Number <span class="text-danger">*</span></label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-phone"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        value="{{ applicant.phone_number }}"
+        name="p_number"
+        readonly
+      />
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label fw-bold">Gender <span class="text-danger">*</span></label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+      <select class="form-select" name="gender" readonly>
+        <option value="Male" {% if applicant.gender == 'Male' %}selected{% endif %}>Male</option>
+        <option value="Female" {% if applicant.gender == 'Female' %}selected{% endif %}>Female</option>
+        <option value="Other" {% if applicant.gender == 'Other' %}selected{% endif %}>Other</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label fw-bold">Address</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+      <textarea class="form-control" name="address" rows="3" readonly>{{ applicant.address }}</textarea>
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label fw-bold">CV</label>
+    <input
+      type="text"
+      class="form-control mb-2"
+      value="{{ applicant.cv }}"
+      readonly
+    />
+  
+  {% else %}
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <label class="form-label fw-bold">First Name <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          value="{{ user.first_name }}"
+          name="f_name"
+          readonly
+        />
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <label class="form-label fw-bold">Last Name <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-user"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          value="{{ user.last_name }}"
+          name="l_name"
+          readonly
+        />
+      </div>
+    </div>
+  </div>
+  <div class="mb-4">
+    <label class="form-label fw-bold">Username</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        value="{{ user.username }}"
+        name="username"
+        readonly
+      />
+    </div>
+  </div>
+  <div class="mb-4">
+    <label class="form-label fw-bold">Email</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+      <input
+        type="email"
+        class="form-control"
+        value="{{ user.email }}"
+        name="email"
+        readonly
+      />
+    </div>
+  </div>
+  
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <label class="form-label fw-bold">State <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-map"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          value="{{ applicant.state }}"
+          name="state"
+          readonly
+        />
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <label class="form-label fw-bold">Country <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-globe"></i></span>
+        <input
+          type="text"
+          class="form-control"
+          name="country"
+          value="{{ applicant.country }}"
+          readonly
+        />
+      </div>
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label fw-bold">Company Name <span class="text-danger">*</span></label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-building"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        value="{{ applicant.company }}"
+        name="company"
+        readonly
+      />
+    </div>
+  </div>
+  
+  <div class="mb-4">
+    <label class="form-label fw-bold">Company Logo</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fa fa-image"></i></span>
+      <input type="text" value="{{applicant.logo}}" class="form-control" name="logo" readonly/>
+    </div>
+  </div>
+
+  {% endif %}
+
+  <div class="mt-2 text-center">
+    <a
+      href="{% url 'edit_profile' %}"
+      class="btn btn-primary"
+      style="color: #f5f5f7; background: var(--primary)"
+      ><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit Profile</a
+    >
+  </div>
+</div>
+{% endblock %}

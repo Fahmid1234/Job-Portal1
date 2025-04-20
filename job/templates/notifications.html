@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Notifications</h2>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if notifications %}
+                <div class="list-group">
+                    {% for notification in notifications %}
+                        <div class="list-group-item list-group-item-action {% if not notification.is_read %}list-group-item-primary{% endif %} mb-2">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ notification.message }}</h5>
+                                <small>{{ notification.created_at|date:"M d, Y" }} at {{ notification.created_at|time:"H:i" }}</small>
+                            </div>
+                            {% if not notification.is_read %}
+                                <div class="mt-2">
+                                    <a href="{% url 'mark_notification_read' notification.id %}" class="btn btn-sm btn-outline-secondary">Mark as Read</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center">
+                    <i class="fa fa-bell-slash mr-2"></i> You don't have any notifications.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
